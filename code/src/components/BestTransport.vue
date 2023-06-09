@@ -6,9 +6,11 @@
       </b-navbar-brand>
     </b-navbar>
     
-    <div>
-      <InputData/>
-      <PriceResult/>
+    <div class="center-all">
+      <div class="shipping-container">
+          <InputData/>
+          <PriceResult/>
+      </div>
     </div>
   </div>
 
@@ -58,5 +60,20 @@ export default {
 
 .title .navbar-brand {
   margin-left: 20px;
+}
+
+.shipping-container {
+  display: flex;
+  justify-content: center;
+  width: 70%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.center-all {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
 }
 </style>
