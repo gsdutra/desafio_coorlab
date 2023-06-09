@@ -8,7 +8,7 @@
     
     <div class="center-all">
       <div class="shipping-container">
-          <InputData/>
+          <InputData :cities="cities"/>
           <PriceResult/>
       </div>
     </div>
@@ -37,10 +37,12 @@ export default {
   data() {
     const appName = ''
     let transport_data = []
+    let cities = []
 
     return {
       appName,
-      transport_data
+      transport_data,
+      cities
     }
   },
   created() {
@@ -49,6 +51,7 @@ export default {
     axios.get('http://api.localhost:3000/transport')
       .then(response => {
         this.transport_data = response.data;
+        this.cities = this.getCities(response.data);
       })
       .catch(error => {
         console.error(error);
@@ -58,9 +61,17 @@ export default {
   },
   methods: {
     // Implemente aqui os metodos utilizados na pagina
-    methodFoo() {
-      console.log(this.appName)
+    getCities(arrayOfTransport) {
+      let cities_arr = [];
+      arrayOfTransport.forEach(elem => {
+        if (!cities_arr.includes(elem.city)) {
+          cities_arr.push(elem.city);
+        }
+      })
+
+      return cities_arr
     },
+
   },
 }
 </script>
