@@ -5,6 +5,11 @@
         <b>{{ appName }}</b>
       </b-navbar-brand>
     </b-navbar>
+    
+    <div>
+      <InputData/>
+      <PriceResult/>
+    </div>
   </div>
 
 </template>
@@ -15,10 +20,15 @@ import {
   BNavbarBrand,
 } from 'bootstrap-vue'
 
+import InputData from './InputData.vue'
+import PriceResult from './PriceResult.vue'
+
 export default {
   components: {
     BNavbar,
     BNavbarBrand,
+    InputData,
+    PriceResult
   },
   data() {
     const appName = ''
