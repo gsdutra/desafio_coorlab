@@ -25,6 +25,8 @@ import {
 import InputData from './InputData.vue'
 import PriceResult from './PriceResult.vue'
 
+import axios from 'axios'
+
 export default {
   components: {
     BNavbar,
@@ -34,14 +36,24 @@ export default {
   },
   data() {
     const appName = ''
+    let transport_data = []
 
     return {
       appName,
+      transport_data
     }
   },
   created() {
     // Implemente aqui o GET dos dados da API REST
     // para que isso ocorra na inicialização da pagina
+    axios.get('http://api.localhost:3000/transport')
+      .then(response => {
+        this.transport_data = response.data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
     this.appName = 'Melhor Frete'
   },
   methods: {
