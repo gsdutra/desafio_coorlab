@@ -1,31 +1,72 @@
 <template>
-	<div class="input-data">
-		<h5>
-			<img src="../assets/map.png"> 
-			<a>Insira o destino e o peso</a>
-		</h5>
-	</div>
+  <div class="input-data">
+    <h5>
+      <img src="../assets/map.png"> 
+      <a>Insira o destino e o peso</a>
+    </h5>
+
+    <b-form @submit="onSubmit" v-if="show">
+
+      <b-form-group id="input-group-1" label="Destino" label-for="input-1">
+        <b-form-select
+          id="input-1"
+          v-model="form.destination"
+          :options="destinations"
+          required
+        ></b-form-select>
+      </b-form-group>
+
+      <b-form-group id="input-group-2" label="Peso" label-for="input-2">
+        <b-form-input
+          id="input-2"
+          v-model="form.weight"
+          placeholder="Peso da carga em kg"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-button type="submit" variant="primary">Analisar</b-button>
+
+    </b-form>
+
+  </div>
 </template>
 
 <script>
 export default {
+
+  data() {
+    return {
+      form: {
+        weight: null
+      },
+      destinations: ['Cidade1', 'Cidade2'],
+      show: true
+    }
+  },
+  methods: {
+    onSubmit(event) {
+      event.preventDefault()
+      alert(JSON.stringify(this.form))
+    },
+  }
 }
 </script>
 
 <style>
-	.input-data {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		background: #DEDEDE;
-		border-radius: 20px;
-		height: 40rem;
-		width: 40%;
-	}
-	img {
-		width: 40px;
-		height: auto;
-		margin-right: 1rem;
-	}
+  .input-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #DEDEDE;
+    border-radius: 20px;
+    height: 40rem;
+    width: 40%;
+  }
+  img {
+    width: 40px;
+    height: auto;
+    margin-right: 1rem;
+  }
 </style>
