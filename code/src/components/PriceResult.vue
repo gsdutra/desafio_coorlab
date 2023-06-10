@@ -8,6 +8,10 @@
 
 <script>
 export default {
+  props: {
+    cheapest: Object,
+    fastest: Object
+  }
 }
 </script>
 

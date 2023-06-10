@@ -8,8 +8,12 @@
     
     <div class="center-all">
       <div class="shipping-container">
-          <InputData :cities="cities"/>
-          <PriceResult/>
+          <InputData 
+            :cities="cities"
+            @formResponse="((e) => formResponseData = e)"/>
+          <PriceResult
+            :fastest="getFastest()"
+            :cheapest="getCheapest()"/>
       </div>
     </div>
   </div>
@@ -36,13 +40,15 @@ export default {
   },
   data() {
     const appName = ''
-    let transport_data = []
+    let transportData = []
     let cities = []
+    let formResponseData = null;
 
     return {
       appName,
-      transport_data,
-      cities
+      transportData,
+      cities,
+      formResponseData,
     }
   },
   created() {
@@ -50,7 +56,7 @@ export default {
     // para que isso ocorra na inicialização da pagina
     axios.get('http://api.localhost:3000/transport')
       .then(response => {
-        this.transport_data = response.data;
+        this.transportData = response.data;
         this.cities = this.getCities(response.data);
       })
       .catch(error => {
@@ -68,10 +74,84 @@ export default {
           cities_arr.push(elem.city);
         }
       })
-
       return cities_arr
     },
 
+    getCheapest() {
+      if (!this.formResponseData) return null;
+      const destination = this.formResponseData.destination
+      const weight = this.formResponseData.weight
+      let res = {};
+      let cheapest = Infinity;
+      if (weight > 100) {
+        this.transportData.forEach(elem => {
+          const cost_heavy = parseFloat(elem.cost_transport_heavy.replace(/[^\d.]/g, ''));
+          if (cost_heavy < cheapest
+              && elem.city === destination) {
+            cheapest = cost_heavy;
+            res = elem;
+          }
+        })
+      } else {
+        this.transportData.forEach(elem => {
+          const cost_light = parseFloat(elem.cost_transport_light.replace(/[^\d.]/g, ''));
+          if (cost_light < cheapest
+              && elem.city === destination) {
+            cheapest = cost_light;
+            res = elem;
+          }
+        })
+      }
+    return {
+        name: res.name,
+        cost: weight*cheapest,
+        lead_time: res.lead_time
+      }
+    },
+
+    getFastest() {
+      if (!this.formResponseData) return null;
+      const destination = this.formResponseData.destination;
+      const weight = this.formResponseData.weight;
+      const weightHeavy = weight > 100;
+      let res = {};
+      let price;
+      let fastest = 'init';
+      this.transportData.forEach(elem => {
+          if (this.compareHours(elem.lead_time, fastest)
+              && elem.city === destination) {
+            fastest = elem.lead_time;
+            price = (weightHeavy? elem.cost_transport_heavy: elem.cost_transport_light)
+            res = elem;
+          }
+        })
+        console.log(res)
+      return {
+        name: res.name,
+        cost: weight*price,
+        lead_time: res.lead_time
+      }
+    },
+
+    compareHours(h1, h2) {
+      if (h2 === 'init') return h1;
+      let [h1format, h2format] = [h1,h2]
+      if (h1[h1.length] === 'h') {
+        h1format = h1format.slice(0, -1);
+        h1format + '00';
+      } else {
+        h1format = h1format.slice(0, -3) + h1format.slice(-2, h1format.length);
+      }
+      if (h2[h2.length] === 'h') {
+        h2format = h2format.slice(0, -1);
+        h2format + '00';
+      } else {
+        h2format = h2format.slice(0, -3) + h2format.slice(-2, h2format.length);
+      }
+
+      if (parseInt(h1format) < parseInt(h2format)) return h1;
+      return h2;
+    }
   },
 }
 </script>

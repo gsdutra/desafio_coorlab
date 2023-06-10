@@ -51,9 +51,9 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault()
-      alert(JSON.stringify(this.form))
+      this.$emit('formResponse', this.form)
     }
-  }
+  },
 }
 </script>
 
