@@ -66,7 +66,8 @@ export default {
   background: #DEDEDE;
   border-radius: 20px;
   height: 40rem;
-  width: 40%;
+  width: 40vw;
+  padding: 1rem;
 }
 
 img {

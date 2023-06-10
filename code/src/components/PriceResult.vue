@@ -1,7 +1,7 @@
 <template>
   <div class="price-result">
-    <h5 v-if="!cheapest">
-      Nenhum dado selecionado
+    <h5 v-if="!cheapest" style="align-self: center; text-align: center;">
+      <span>Nenhum dado selecionado</span>
     </h5>
     <h5 v-if="cheapest">
       Estas são as melhores alternativas de frete que encontramos para você:
@@ -23,8 +23,6 @@
       color2="#95b4c7"
       icon_path=""
     />
-
-    <b-button v-if="cheapest" variant="primary" class="button-absolute">Limpar</b-button>
   </div>
 </template>
 
@@ -49,13 +47,7 @@ export default {
     justify-content: center;
     height: 40rem;
     padding: 3rem;
-    width: 60%;
+    width: 60vw;
     position: relative;
-  }
-
-  .button-absolute {
-    position: absolute;
-    bottom: 0;
-    right: 0;
   }
 </style>

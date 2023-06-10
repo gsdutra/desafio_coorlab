@@ -10,6 +10,7 @@
       <div class="shipping-container">
         <InputData :cities="cities" @formResponse="((e) => formResponseData = e)" />
         <PriceResult :fastest="getFastest()" :cheapest="getCheapest()" />
+        <b-button v-if="formResponseData" variant="primary" class="button-absolute">Limpar</b-button>
       </div>
     </div>
   </div>
@@ -175,15 +176,28 @@ export default {
 .shipping-container {
   display: flex;
   justify-content: center;
-  width: 70%;
+  width: 80vw;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 20px;
-  padding: 20px;
+  padding: 1.3rem;
+  position: relative;
 }
 
 .center-all {
   display: flex;
   justify-content: center;
   margin-top: 4rem;
+}
+
+.button-absolute {
+    position: absolute;
+    bottom: 1.3rem;
+    right: 1.3rem;
+  }
+
+@media (max-width: 600px) {
+  .shipping-container {
+    width: 100vw;
+  }
 }
 </style>
