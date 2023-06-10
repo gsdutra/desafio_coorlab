@@ -5,19 +5,14 @@
         <b>{{ appName }}</b>
       </b-navbar-brand>
     </b-navbar>
-    
+
     <div class="center-all">
       <div class="shipping-container">
-          <InputData 
-            :cities="cities"
-            @formResponse="((e) => formResponseData = e)"/>
-          <PriceResult
-            :fastest="getFastest()"
-            :cheapest="getCheapest()"/>
+        <InputData :cities="cities" @formResponse="((e) => formResponseData = e)" />
+        <PriceResult :fastest="getFastest()" :cheapest="getCheapest()" />
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -78,64 +73,76 @@ export default {
     },
 
     getCheapest() {
-      if (!this.formResponseData) return null;
-      const destination = this.formResponseData.destination
-      const weight = this.formResponseData.weight
-      let res = {};
-      let cheapest = Infinity;
-      if (weight > 100) {
-        this.transportData.forEach(elem => {
-          const cost_heavy = parseFloat(elem.cost_transport_heavy.replace(/[^\d.]/g, ''));
-          if (cost_heavy < cheapest
+      try {
+        if (!this.formResponseData) return null;
+        const destination = this.formResponseData.destination
+        const weight = this.formResponseData.weight
+        let res = {};
+        let cheapest = Infinity;
+        if (weight > 100) {
+          this.transportData.forEach(elem => {
+            const cost_heavy = parseFloat(elem.cost_transport_heavy.replace(/[^\d.]/g, ''));
+            if (cost_heavy < cheapest
               && elem.city === destination) {
-            cheapest = cost_heavy;
-            res = elem;
-          }
-        })
-      } else {
-        this.transportData.forEach(elem => {
-          const cost_light = parseFloat(elem.cost_transport_light.replace(/[^\d.]/g, ''));
-          if (cost_light < cheapest
+              cheapest = cost_heavy;
+              res = elem;
+            }
+          })
+        } else {
+          this.transportData.forEach(elem => {
+            const cost_light = parseFloat(elem.cost_transport_light.replace(/[^\d.]/g, ''));
+            if (cost_light < cheapest
               && elem.city === destination) {
-            cheapest = cost_light;
-            res = elem;
-          }
-        })
+              cheapest = cost_light;
+              res = elem;
+            }
+          })
+        }
+        return {
+          name: res.name,
+          cost: weight * cheapest,
+          lead_time: res.lead_time
+        }
+      } catch (err) {
+        alert('Erro: ' + err)
+        return null
       }
-    return {
-        name: res.name,
-        cost: weight*cheapest,
-        lead_time: res.lead_time
-      }
+
     },
 
     getFastest() {
-      if (!this.formResponseData) return null;
-      const destination = this.formResponseData.destination;
-      const weight = this.formResponseData.weight;
-      const weightHeavy = weight > 100;
-      let res = {};
-      let price;
-      let fastest = 'init';
-      this.transportData.forEach(elem => {
+      try {
+        if (!this.formResponseData) return null;
+        const destination = this.formResponseData.destination;
+        const weight = this.formResponseData.weight;
+        const weightHeavy = weight > 100;
+        let res = {};
+        let price;
+        let fastest = 'init';
+
+        this.transportData.forEach(elem => {
           if (this.compareHours(elem.lead_time, fastest)
-              && elem.city === destination) {
+            && elem.city === destination) {
             fastest = elem.lead_time;
-            price = (weightHeavy? elem.cost_transport_heavy: elem.cost_transport_light)
+            price = (weightHeavy ? elem.cost_transport_heavy : elem.cost_transport_light)
             res = elem;
           }
         })
-        console.log(res)
-      return {
-        name: res.name,
-        cost: weight*price,
-        lead_time: res.lead_time
+
+        return {
+          name: res.name,
+          cost: weight * parseFloat(price.replace(/[^\d.]/g, '')),
+          lead_time: res.lead_time
+        }
+      } catch (err) {
+        alert('Erro: ' + err)
+        return null
       }
     },
 
     compareHours(h1, h2) {
       if (h2 === 'init') return h1;
-      let [h1format, h2format] = [h1,h2]
+      let [h1format, h2format] = [h1, h2]
       if (h1[h1.length] === 'h') {
         h1format = h1format.slice(0, -1);
         h1format + '00';
