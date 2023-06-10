@@ -8,9 +8,9 @@
 
     <div class="center-all">
       <div class="shipping-container">
-        <InputData :cities="cities" @formResponse="((e) => formResponseData = e)" />
+        <InputData :cities="cities" @formResponse="((e) => formResponseData = e)" ref="formComponentRef" />
         <PriceResult :fastest="getFastest()" :cheapest="getCheapest()" />
-        <b-button v-if="formResponseData" variant="primary" class="button-absolute">Limpar</b-button>
+        <b-button v-if="formResponseData" variant="primary" class="button-absolute" @click="resetForm" >Limpar</b-button>
       </div>
     </div>
   </div>
@@ -63,6 +63,11 @@ export default {
   },
   methods: {
     // Implemente aqui os metodos utilizados na pagina
+    resetForm() {
+      this.$refs.formComponentRef.resetForm();
+      this.formResponseData = null;
+    },
+
     getCities(arrayOfTransport) {
       let cities_arr = [];
       arrayOfTransport.forEach(elem => {

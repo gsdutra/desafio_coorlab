@@ -5,12 +5,12 @@
       <a>Insira o destino e o peso</a>
     </h5>
 
-    <b-form @submit="onSubmit" v-if="show">
+    <b-form @submit="onSubmit" v-if="show" ref="formRef">
       <b-form-group id="input-group-1" label="Destino" label-for="input-1">
         <b-form-select
           id="input-1"
           v-model="form.destination"
-          :options="destinations"
+          :options="[ { text: 'Selecione o destino', value: null }, ...destinations ]"
           required
         ></b-form-select>
       </b-form-group>
@@ -52,6 +52,9 @@ export default {
     onSubmit(event) {
       event.preventDefault()
       this.$emit('formResponse', this.form)
+    },
+    resetForm() {
+      this.$refs.formRef.reset();
     }
   },
 }
