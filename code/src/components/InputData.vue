@@ -23,7 +23,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button style="background-color: #93b4c3; color: black; border: none; padding-left: 3rem; padding-right: 3rem; max-width: 14rem; align-self: center;" type="submit" class="mt-3">Analisar</b-button>
+      <button style="align-self: center;" type="submit" class="mt-3 default-button">Analisar</button>
     </b-form>
 
     <ModalWarning :showModal="showModal" :message="modalMessage"
@@ -85,7 +85,7 @@ export default {
   justify-content: center;
   background: #DEDEDE;
   border-radius: 20px;
-  height: 40rem;
+  height: 70vh;
   padding: 1rem;
 }
 
@@ -96,8 +96,21 @@ img {
 }
 
 .justify-form {
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   width: 30vw;
+}
+
+.default-button {
+  background-color: #93b4c3;
+  color: black;
+  border: none;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  max-width: 14rem; 
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  border-radius: 8px;
 }
 </style>

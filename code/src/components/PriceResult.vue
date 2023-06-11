@@ -12,8 +12,8 @@
       text="Frete com menor valor"
       :data="cheapest"
       color1="#e0e0df"
-      color2="#bdd3d5"
-      icon_path=""
+      color2="#bdcfd5"
+      iconHand
     />
     <TransportInfo
       v-if="fastest"
@@ -21,7 +21,7 @@
       :data="fastest"
       color1="#efeff2"
       color2="#95b4c7"
-      icon_path=""
+      iconClock
     />
   </div>
 </template>
@@ -45,7 +45,7 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    height: 40rem;
+    height: 70vh;
     padding: 3rem;
     width: 60vw;
     position: relative;

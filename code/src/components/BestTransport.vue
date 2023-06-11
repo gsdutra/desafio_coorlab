@@ -1,16 +1,20 @@
 <template>
   <div class="title">
-    <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand class="ml-2">
-        <b>{{ appName }}</b>
-      </b-navbar-brand>
+    <b-navbar style="height: 3.4rem;" toggleable="lg">
     </b-navbar>
 
     <div class="center-all">
-      <div class="shipping-container">
-        <InputData :cities="cities" @formResponse="((e) => formResponseData = e)" ref="formComponentRef" />
-        <PriceResult :fastest="getFastest()" :cheapest="getCheapest()" />
-        <b-button style="background-color: #93b4c3; color: black; border: none; padding-left: 3rem; padding-right: 3rem; max-width: 14rem;" v-if="formResponseData" class="button-absolute" @click="resetForm" >Limpar</b-button>
+      <div class="shipping-outer-container">
+        <b-navbar toggleable="lg" class="inner-nav">
+          <b-navbar-brand class="ml-2">
+            <img src="../assets/arrow_truck.png"/><b>{{ appName }}</b>
+          </b-navbar-brand>
+        </b-navbar>
+        <div class="shipping-inner-container">
+          <InputData :cities="cities" @formResponse="((e) => formResponseData = e)" ref="formComponentRef" />
+          <PriceResult :fastest="getFastest()" :cheapest="getCheapest()" />
+          <button v-if="formResponseData" class="button-absolute default-button" @click="resetForm" >Limpar</button>
+        </div>
       </div>
     </div>
   </div>
@@ -168,21 +172,25 @@ export default {
 
 <style scoped>
 .title .navbar {
-  background-color: #00aca6 !important;
+  background-color: #2d6883;
 }
 
 .title .navbar-brand {
   margin-left: 20px;
 }
 
-.shipping-container {
+.shipping-inner-container {
   display: flex;
   justify-content: center;
   width: 80vw;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 20px;
   padding: 1.3rem;
   position: relative;
+}
+
+.shipping-outer-container {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .center-all {
@@ -195,6 +203,22 @@ export default {
   position: absolute;
   bottom: 1.3rem;
   right: 1.3rem;
+}
+
+.inner-nav {
+  background-color: #93b4c3 !important;
+}
+
+.default-button {
+  background-color: #93b4c3;
+  color: black;
+  border: none;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  max-width: 14rem; 
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  border-radius: 8px;
 }
 
 @media (max-width: 600px) {

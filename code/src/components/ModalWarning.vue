@@ -4,7 +4,7 @@
     <div class="modal-w-content">
       <img src="../assets/exclamation-square.svg"/>
       <p>{{ message }}</p>
-      <b-button style="background-color: #93b4c3; color: black; border: none; padding-left: 3rem; padding-right: 3rem; max-width: 14rem;" @click="closeModal">Fechar</b-button>
+      <button class="default-button" @click="closeModal">Fechar</button>
     </div>
   </div>
 </template>
