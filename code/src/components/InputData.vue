@@ -5,33 +5,38 @@
       <a>Insira o destino e o peso</a>
     </h5>
 
-    <b-form @submit="onSubmit" v-if="show" ref="formRef">
-      <b-form-group id="input-group-1" label="Destino" label-for="input-1">
+    <b-form @submit="onSubmit" v-if="show" ref="formRef" class="justify-form">
+      <b-form-group id="input-group-1" label="Destino" label-for="city">
         <b-form-select
-          id="input-1"
+          id="city"
           v-model="form.destination"
           :options="[ { text: 'Selecione o destino', value: null }, ...destinations ]"
-          required
         ></b-form-select>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Peso" label-for="input-2">
+      <b-form-group id="input-group-2" label="Peso" label-for="weight">
         <b-form-input
-          id="input-2"
+          id="weight"
           type="number"
           v-model="form.weight"
           placeholder="Peso da carga em kg"
-          required
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary" class="mt-3">Analisar</b-button>
+      <b-button style="background-color: #93b4c3; color: black; border: none; padding-left: 3rem; padding-right: 3rem; max-width: 14rem; align-self: center;" type="submit" class="mt-3">Analisar</b-button>
     </b-form>
+
+    <ModalWarning :showModal="showModal" :message="modalMessage"
+    @close="()=>showModal=false"/>
   </div>
 </template>
 
 <script>
+import ModalWarning from './ModalWarning.vue'
 export default {
+  components: {
+    ModalWarning
+  },
   props: {
     cities: Array
   },
@@ -40,7 +45,9 @@ export default {
       form: {
         weight: null
       },
-      show: true
+      show: true,
+      showModal: false,
+      modalMessage: ''
     }
   },
   computed: {
@@ -56,7 +63,12 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault()
-      this.$emit('formResponse', this.form)
+      if (!this.form.weight || !this.form.destination) {
+        this.modalMessage = 'Insira os valores para realizar a análise.';
+        this.showModal = true;
+      } else {
+        this.$emit('formResponse', this.form)
+      }
     },
     resetForm() {
       this.$refs.formRef.reset();
@@ -74,7 +86,6 @@ export default {
   background: #DEDEDE;
   border-radius: 20px;
   height: 40rem;
-  width: 40vw;
   padding: 1rem;
 }
 
@@ -82,5 +93,11 @@ img {
   width: 37px;
   height: auto;
   margin-right: 1rem;
+}
+
+.justify-form {
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
 }
 </style>
