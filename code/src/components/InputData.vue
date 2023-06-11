@@ -87,6 +87,7 @@ export default {
   border-radius: 20px;
   height: 70vh;
   padding: 1rem;
+  width: 30vw;
 }
 
 img {
@@ -99,6 +100,7 @@ img {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
+  padding: 1rem;
   width: 30vw;
 }
 
@@ -112,5 +114,16 @@ img {
   padding-top: .5rem;
   padding-bottom: .5rem;
   border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .input-data {
+    width: 80vw;
+    height: 45vh;
+  }
+  .justify-form {
+    margin-top: 0;
+    width: 70vw;
+  }
 }
 </style>

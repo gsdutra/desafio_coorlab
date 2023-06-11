@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <b-navbar style="height: 3.4rem;" toggleable="lg">
+    <b-navbar class="nav-top" style="height: 3.4rem;" toggleable="lg">
     </b-navbar>
 
     <div class="center-all">
@@ -222,8 +222,16 @@ export default {
 }
 
 @media (max-width: 600px) {
-  .shipping-container {
+  .shipping-inner-container {
     width: 100vw;
+    flex-direction: column;
+    align-items: center;
+  }
+  .center-all {
+    margin-top: 0;
+  }
+  .nav-top {
+    display: none;
   }
 }
 </style>

@@ -40,14 +40,23 @@ export default {
 </script>
 
 <style>
+.price-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 70vh;
+  padding: 3rem;
+  width: 60vw;
+  position: relative;
+}
+
+@media (max-width: 600px) {
   .price-result {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    height: 70vh;
-    padding: 3rem;
-    width: 60vw;
-    position: relative;
+    width: 80vw;
+    height: auto;
+    padding: 0;
+    padding-top: 2rem;
   }
+}
 </style>
