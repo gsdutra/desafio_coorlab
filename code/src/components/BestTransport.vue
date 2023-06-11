@@ -48,8 +48,6 @@ export default {
     }
   },
   created() {
-    // Implemente aqui o GET dos dados da API REST
-    // para que isso ocorra na inicialização da pagina
     axios.get('http://api.localhost:3000/transport')
       .then(response => {
         this.transportData = response.data;
@@ -62,7 +60,6 @@ export default {
     this.appName = 'Melhor Frete'
   },
   methods: {
-    // Implemente aqui os metodos utilizados na pagina
     resetForm() {
       this.$refs.formComponentRef.resetForm();
       this.formResponseData = null;

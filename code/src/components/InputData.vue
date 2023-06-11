@@ -48,6 +48,11 @@ export default {
       return this.cities;
     }
   },
+  mounted() {
+    setTimeout(() => {
+      this.$refs.formRef.reset();
+    }, 0);
+  },
   methods: {
     onSubmit(event) {
       event.preventDefault()
