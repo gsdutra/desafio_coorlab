@@ -52,7 +52,9 @@ export default {
     }
   },
   created() {
-    axios.get('http://api.localhost:3000/transport')
+    const API_URL = process.env.VUE_APP_API_URL
+    if (!API_URL) alert('API URL missing in environment variables.')
+    axios.get(API_URL+'/transport')
       .then(response => {
         this.transportData = response.data;
         this.cities = this.getCities(response.data);
