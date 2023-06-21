@@ -52,7 +52,8 @@ export default {
     }
   },
   created() {
-    const API_URL = process.env.VUE_APP_API_URL
+    const API_URL = process.env.VUE_APP_API_URL;
+    console.log('API_URL: ', API_URL)
     if (!API_URL) alert('API URL missing in environment variables.')
     axios.get(API_URL+'/transport')
       .then(response => {

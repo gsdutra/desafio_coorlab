@@ -1,0 +1,22 @@
+version: "3"
+services:
+  nginx-app:
+    container_name: nginx-app
+    build: ./code
+    ports:
+      - "8080:80"
+    networks:
+      - vue-network
+
+  json-server:
+    build: ./api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api/data.json:/app/data.json
+    networks:
+      - vue-network
+
+networks:
+  vue-network:
+    driver: bridge
