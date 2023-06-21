@@ -14,4 +14,6 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
+ENV VUE_APP_API_URL=http://localhost:3000
+
 CMD ["nginx", "-g", "daemon off;"]
